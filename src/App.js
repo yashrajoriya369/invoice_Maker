@@ -6,23 +6,31 @@ import Dates from "./components/Dates";
 import Table from "./components/Table";
 import Notes from "./components/Notes";
 import Footer from "./components/Footer";
+import TableForm from "./components/TableForm";
 
 function App() {
-  const [showInvoice, setShowInvoice] = useState(false);
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [bankName, setBankName] = useState("");
-  // const [bankAccount, setBankAccount] = useState("");
-  const [bankAccountNumber, setBankAccountNumber] = useState("");
-  const [website, setWebsite] = useState("");
-  const [clientName, setClientName] = useState("");
-  const [clientAddress, setClientAddress] = useState("");
-  const [invoiceNumber, setInvoiceNumber] = useState("");
-  const [invoiceDate, setInvoiceDate] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [notes, setNotes] = useState("");
+  const [showInvoice, setShowInvoice] = useState(true);
+  const [name, setName] = useState("Hotel Amar Palace");
+  const [address, setAddress] = useState(
+    "P. No.-1, Kali Ki Bagichi, Jawahar Nagar"
+  );
+  const [email, setEmail] = useState("aniltrimurti48@gmail.com");
+  const [phone, setPhone] = useState("8829011880");
+  const [bankName, setBankName] = useState("Indian Overseas Bank");
+  const [bankAccountNumber, setBankAccountNumber] = useState("08388100005294");
+  const [website, setWebsite] = useState("hotelamarpalacebharatpur.com");
+  const [clientName, setClientName] = useState("Khushboo Medical");
+  const [clientAddress, setClientAddress] = useState("Mori Char Bhagh");
+  const [invoiceNumber, setInvoiceNumber] = useState("1001");
+  const [invoiceDate, setInvoiceDate] = useState("2004-04-04");
+  const [dueDate, setDueDate] = useState("2005-05-05");
+  const [notes, setNotes] = useState("NOTE :- Run and Govern by A.P Caterers");
+  const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
+  const [amount, setAmount] = useState("");
+  const [list, setList] = useState([]);
+
   const handlePrint = () => {
     window.print();
   };
@@ -42,7 +50,14 @@ function App() {
               invoiceDate={invoiceDate}
               dueDate={dueDate}
             />
-            <Table />
+            <Table
+              description={description}
+              quantity={quantity}
+              price={price}
+              amount={amount}
+              list={list}
+              setList={setList}
+            />
             <Notes notes={notes} />
             <Footer
               name={name}
@@ -233,12 +248,27 @@ function App() {
                 </div>
               </article>
 
+              <article className="md:mb-16">
+                <TableForm
+                  description={description}
+                  setDescription={setDescription}
+                  quantity={quantity}
+                  setQuantity={setQuantity}
+                  price={price}
+                  setPrice={setPrice}
+                  amount={amount}
+                  setAmount={setAmount}
+                  list={list}
+                  setList={setList}
+                />
+              </article>
+
               <label htmlFor="notes">Additonal Notes</label>
               <textarea
                 name="notes"
                 id="notes"
                 cols="30"
-                rows="10"
+                rows="5"
                 placeholder="Additional Notes to the Client"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
