@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import Header from "./components/Header";
 import MainDetails from "./components/MainDetails";
 import ClientDetail from "./components/ClientDetail";
@@ -7,9 +7,10 @@ import Table from "./components/Table";
 import Notes from "./components/Notes";
 import Footer from "./components/Footer";
 import TableForm from "./components/TableForm";
+import ReactToPrint from "react-to-print";
 
 function App() {
-  const [showInvoice, setShowInvoice] = useState(true);
+  const [showInvoice, setShowInvoice] = useState(false);
   const [name, setName] = useState("Hotel Amar Palace");
   const [address, setAddress] = useState(
     "P. No.-1, Kali Ki Bagichi, Jawahar Nagar"
@@ -19,17 +20,20 @@ function App() {
   const [bankName, setBankName] = useState("Indian Overseas Bank");
   const [bankAccountNumber, setBankAccountNumber] = useState("08388100005294");
   const [website, setWebsite] = useState("hotelamarpalacebharatpur.com");
-  const [clientName, setClientName] = useState("Khushboo Medical");
-  const [clientAddress, setClientAddress] = useState("Mori Char Bhagh");
-  const [invoiceNumber, setInvoiceNumber] = useState("1001");
-  const [invoiceDate, setInvoiceDate] = useState("2004-04-04");
-  const [dueDate, setDueDate] = useState("2005-05-05");
-  const [notes, setNotes] = useState("NOTE :- Run and Govern by A.P Caterers");
+  const [clientName, setClientName] = useState("");
+  const [clientAddress, setClientAddress] = useState("");
+  const [invoiceNumber, setInvoiceNumber] = useState("");
+  const [invoiceDate, setInvoiceDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [notes, setNotes] = useState("");
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [amount, setAmount] = useState("");
   const [list, setList] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  const componentRef = useRef();
 
   const handlePrint = () => {
     window.print();
@@ -38,44 +42,56 @@ function App() {
     <>
       <main className="m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl bg-white rounded shadow">
         {showInvoice ? (
-          <div>
-            <Header handlePrint={handlePrint} />
-            <MainDetails name={name} address={address} />
-            <ClientDetail
-              clientName={clientName}
-              clientAddress={clientAddress}
+          <>
+            <ReactToPrint
+              trigger={() => (
+                <button className="ml-10 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300">
+                  Print / Download
+                </button>
+              )}
+              content={() => componentRef.current}
             />
-            <Dates
-              invoiceNumber={invoiceNumber}
-              invoiceDate={invoiceDate}
-              dueDate={dueDate}
-            />
-            <Table
-              description={description}
-              quantity={quantity}
-              price={price}
-              amount={amount}
-              list={list}
-              setList={setList}
-            />
-            <Notes notes={notes} />
-            <Footer
-              name={name}
-              address={address}
-              email={email}
-              website={website}
-              phone={phone}
-              bankName={bankName}
-              // bankAccount={bankAccount}
-              bankAccountNumber={bankAccountNumber}
-            />
+            <div ref={componentRef} className="p-10">
+              <Header handlePrint={handlePrint} />
+              <MainDetails name={name} address={address} />
+              <ClientDetail
+                clientName={clientName}
+                clientAddress={clientAddress}
+              />
+              <Dates
+                invoiceNumber={invoiceNumber}
+                invoiceDate={invoiceDate}
+                dueDate={dueDate}
+              />
+              <Table
+                description={description}
+                quantity={quantity}
+                price={price}
+                amount={amount}
+                list={list}
+                setList={setList}
+                total={total}
+                setTotal={setTotal}
+              />
+              <Notes notes={notes} />
+              <Footer
+                name={name}
+                address={address}
+                email={email}
+                website={website}
+                phone={phone}
+                bankName={bankName}
+                // bankAccount={bankAccount}
+                bankAccountNumber={bankAccountNumber}
+              />
+            </div>
             <button
               onClick={() => setShowInvoice(false)}
-              className="mt-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
+              className="ml-10 mt-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
             >
               Edit Information
             </button>
-          </div>
+          </>
         ) : (
           <>
             <div className="flex flex-col justify-center">
@@ -260,6 +276,8 @@ function App() {
                   setAmount={setAmount}
                   list={list}
                   setList={setList}
+                  total={total}
+                  setTotal={setTotal}
                 />
               </article>
 

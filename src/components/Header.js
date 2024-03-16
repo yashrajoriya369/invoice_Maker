@@ -12,7 +12,7 @@ const Header = (props) => {
           </h1>
         </div>
         <div>
-          <ul className="flex items-center justify-between flex-wrap">
+          {/* <ul className="flex items-center justify-between flex-wrap">
             <li>
               <button
                 onClick={handlePrint}
@@ -37,7 +37,7 @@ const Header = (props) => {
                 Send
               </button>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </header>
     </>

@@ -3,12 +3,10 @@ import React from "react";
 const Footer = (props) => {
   const {
     name,
-    address,
     email,
     website,
     phone,
     bankName,
-    bankAccount,
     bankAccountNumber,
   } = props;
   return (

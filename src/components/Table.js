@@ -1,7 +1,7 @@
 import React from "react";
 
 const Table = (props) => {
-  const { list } = props;
+  const { list, total } = props;
   return (
     <>
       <table width="100%" className="mb-5">
@@ -26,6 +26,9 @@ const Table = (props) => {
           </React.Fragment>
         ))}
       </table>
+      <div className="px-5">
+        <h2 className="flex items-end justify-end text-gray-800 text-xl">Rs. {total.toLocaleString()}</h2>
+      </div>
     </>
   );
 };
